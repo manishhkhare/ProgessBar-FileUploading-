@@ -8,6 +8,7 @@ export default function ProgressBar() {
   // Function to handle file input change
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+    console.log(e.target.files[0])
   };
 
   // Function to submit the form
@@ -19,19 +20,21 @@ export default function ProgressBar() {
 
     let data = new FormData();
     data.append("Files", file);
-
+      console.log(data);
     try {
       const response = await axios({
         method: "POST",
         url: "http://localhost:1337/api/images",
         data:{
-          File:file
+          File:data
         },
         onUploadProgress: (e) => {
+          console.log(e.loaded);
           const percentValue = Math.round((e.loaded * 100) / e.total);
-          setPercent(percentValue);
-        }
-      });
+          setPercent(
+            percentValue 
+          )}
+        });
 
       console.log("File uploaded successfully:", response.data);
       // Optionally handle success here
